@@ -4,7 +4,7 @@ import { ITEMS } from '../content/items';
 import { LANDMARKS } from '../content/landmarks';
 import { PARTY_CLASSES } from '../content/party';
 import { TERRAIN } from '../content/terrain';
-import { atHold, canForage, currentDay, daysRemaining, isAfternoon } from '../sim/game';
+import { atHold, canForage, currentDay, daysRemaining, doorBearing, isAfternoon } from '../sim/game';
 import { hexEquals, type Axial } from '../sim/hex';
 import { hexAt } from '../sim/mapgen';
 import type { GameState } from '../sim/types';
@@ -48,7 +48,7 @@ export class Hud {
     this.top.innerHTML = `
       <div>
         <div class="day">Day ${day} <span class="sub">· ${isAfternoon(state) ? 'Afternoon' : 'Morning'}</span></div>
-        <div class="sub">Early autumn · ${atHold(state) ? 'At the hold' : state.doorFound ? 'Door found. Go home.' : 'Searching'}</div>
+        <div class="sub">Early autumn · ${state.doorFound ? 'Door found. Go home.' : atHold(state) ? `The door lies ${doorBearing(state)}` : `Searching ${doorBearing(state)}`}</div>
       </div>
       <div class="stat ${rationClass}" title="Rations (the patrol eats ${perDay} a day)">
         <span>\u{1F330}</span><span class="num">${rations}</span><span class="sub">rations<br>(${rationDays}d)</span>

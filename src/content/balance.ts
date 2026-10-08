@@ -8,10 +8,15 @@ export const BALANCE = {
   mapHeight: 30,
 
   /** Days in the season before first snow. */
-  seasonDays: 36,
+  seasonDays: 34,
 
-  /** Door is placed this many hexes from the hold (inclusive band). */
+  /** Door is placed this many hexes from the hold (inclusive band)... */
   doorDistance: { min: 10, max: 13 },
+  /** ...and this many half-days of walking by the cheapest route, so seeds are similarly hard. */
+  doorPathCost: { min: 16, max: 21 },
+
+  /** From a hill, the grey of the old works can be picked out this far away. */
+  ruinSpotDistance: 5,
 
   /** How many minor landmarks to scatter. */
   landmarkCount: 7,
@@ -19,7 +24,7 @@ export const BALANCE = {
   landmarkMinSpacing: 3,
 
   /** Rations: one per mouse per day. */
-  startRations: 24,
+  startRations: 27,
   maxRations: 40,
   rationsPerMousePerDay: 1,
   /** Fraction of max HP lost per day without food. */

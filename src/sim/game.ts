@@ -14,7 +14,7 @@ import { LANDMARKS } from '../content/landmarks';
 import { TERRAIN } from '../content/terrain';
 import { endBattle, resolveRound, startBattle } from './battle';
 import { reveal, revealFromPosition } from './fog';
-import { hexAdjacent, hexEquals, type Axial } from './hex';
+import { axialToPixel, hexAdjacent, hexEquals, type Axial } from './hex';
 import { generateMap, hexAt, isPassable } from './mapgen';
 import { allDown, createParty, isDown, restoreParty } from './party';
 import { hashSeed, Rng } from './rng';
@@ -65,6 +65,21 @@ function modeOf(state: GameState): GameState['mode'] {
 
 export function atHold(state: GameState): boolean {
   return hexEquals(state.pos, state.map.hold);
+}
+
+/** Eight-point compass bearing from one hex to another, in pixel space. */
+export function bearing(from: Axial, to: Axial): string {
+  const a = axialToPixel(from, 1);
+  const b = axialToPixel(to, 1);
+  const angle = Math.atan2(-(b.y - a.y), b.x - a.x); // y grows downward on screen
+  const names = ['east', 'north-east', 'north', 'north-west', 'west', 'south-west', 'south', 'south-east'];
+  const idx = Math.round(((angle + Math.PI * 2) % (Math.PI * 2)) / (Math.PI / 4)) % 8;
+  return names[idx];
+}
+
+/** What the elders say about where the door lies. */
+export function doorBearing(state: GameState): string {
+  return bearing(state.map.hold, state.map.door);
 }
 
 export function canForage(state: GameState): boolean {

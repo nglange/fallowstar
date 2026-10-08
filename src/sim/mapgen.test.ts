@@ -30,7 +30,12 @@ describe('mapgen', () => {
       expect(d).toBeGreaterThanOrEqual(BALANCE.doorDistance.min);
       expect(d).toBeLessThanOrEqual(BALANCE.doorDistance.max);
       expect(reachableFrom(map, map.hold).has(hexKey(map.door))).toBe(true);
-      expect(shortestPath(map, map.hold, map.door)).not.toBeNull();
+      const path = shortestPath(map, map.hold, map.door);
+      expect(path).not.toBeNull();
+      const cost = path!.reduce((s, h) => s + TERRAIN[hexAt(map, h)!.terrain].moveCost, 0);
+      // Turning the door's neighbours to ruin can shift the cheapest route by a point or two.
+      expect(cost).toBeGreaterThanOrEqual(BALANCE.doorPathCost.min - 2);
+      expect(cost).toBeLessThanOrEqual(BALANCE.doorPathCost.max + 2);
     }
   });
 

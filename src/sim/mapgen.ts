@@ -28,6 +28,7 @@ export interface MapGenOptions {
   width?: number;
   height?: number;
   doorDistance?: { min: number; max: number };
+  doorPathCost?: { min: number; max: number };
   landmarkCount?: number;
 }
 
@@ -68,6 +69,28 @@ export function reachableFrom(map: GameMap, start: Axial): Set<string> {
     }
   }
   return seen;
+}
+
+/** Cheapest walking cost (half-days) from `start` to every reachable hex. */
+export function walkingCosts(map: GameMap, start: Axial): Map<string, number> {
+  const dist = new Map<string, number>();
+  const open: { h: Axial; d: number }[] = [{ h: start, d: 0 }];
+  dist.set(hexKey(start), 0);
+  while (open.length) {
+    let bi = 0;
+    for (let i = 1; i < open.length; i++) if (open[i].d < open[bi].d) bi = i;
+    const { h, d } = open.splice(bi, 1)[0];
+    if (d > (dist.get(hexKey(h)) ?? Infinity)) continue;
+    for (const n of passableNeighbors(map, h)) {
+      const nk = hexKey(n);
+      const nd = d + TERRAIN[hexAt(map, n)!.terrain].moveCost;
+      if (nd < (dist.get(nk) ?? Infinity)) {
+        dist.set(nk, nd);
+        open.push({ h: n, d: nd });
+      }
+    }
+  }
+  return dist;
 }
 
 /**
@@ -238,13 +261,18 @@ function tryGenerate(seed: string, attempt: number, opts: MapGenOptions): GameMa
   hexAt(map, hold)!.terrain = 'meadow';
 
   const reachable = reachableFrom(map, hold);
+  const walkCost = walkingCosts(map, hold);
 
   // Door: far enough that the trip eats most of the season, and reachable.
+  const pathBand = opts.doorPathCost ?? BALANCE.doorPathCost;
   const doorCandidates = hexes.filter((h) => {
     const d = hexDistance(h, hold);
+    const c = walkCost.get(hexKey(h)) ?? Infinity;
     return (
       d >= doorBand.min &&
       d <= doorBand.max &&
+      c >= pathBand.min &&
+      c <= pathBand.max &&
       reachable.has(hexKey(h)) &&
       h.terrain !== 'ford' &&
       h.terrain !== 'marsh'

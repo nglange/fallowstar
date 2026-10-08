@@ -20,7 +20,7 @@ export const TERRAIN: Record<TerrainId, TerrainDef> = {
     moveCost: 1,
     passable: true,
     sight: 2,
-    forage: { min: 2, max: 4 },
+    forage: { min: 2, max: 5 },
     description: 'Open grass gone to seed. Easy going, and the hawks know it.',
   },
   woodland: {
@@ -29,7 +29,7 @@ export const TERRAIN: Record<TerrainId, TerrainDef> = {
     moveCost: 2,
     passable: true,
     sight: 1,
-    forage: { min: 3, max: 6 },
+    forage: { min: 4, max: 7 },
     description: 'Beech and hazel, the leaves turning. Nuts underfoot, teeth in the shadows.',
   },
   bramble: {
@@ -38,7 +38,7 @@ export const TERRAIN: Record<TerrainId, TerrainDef> = {
     moveCost: 3,
     passable: true,
     sight: 1,
-    forage: { min: 2, max: 5 },
+    forage: { min: 3, max: 6 },
     description: 'A thicket of thorn. Slow to push through, but the berries are late and sweet.',
   },
   marsh: {
@@ -47,7 +47,7 @@ export const TERRAIN: Record<TerrainId, TerrainDef> = {
     moveCost: 3,
     passable: true,
     sight: 2,
-    forage: { min: 1, max: 2 },
+    forage: { min: 1, max: 3 },
     description: 'Sedge and standing water. Every step sinks, and the reeds are not empty.',
   },
   hills: {
@@ -56,7 +56,7 @@ export const TERRAIN: Record<TerrainId, TerrainDef> = {
     moveCost: 2,
     passable: true,
     sight: 3,
-    forage: { min: 1, max: 2 },
+    forage: { min: 1, max: 3 },
     description: 'Dry tussock and stone. A hard climb, but the whole country opens out below.',
   },
   river: {
@@ -74,7 +74,7 @@ export const TERRAIN: Record<TerrainId, TerrainDef> = {
     moveCost: 2,
     passable: true,
     sight: 2,
-    forage: { min: 1, max: 3 },
+    forage: { min: 2, max: 4 },
     description: 'Stepping stones where the river runs shallow. Wet feet and a clear way across.',
   },
   ruin: {

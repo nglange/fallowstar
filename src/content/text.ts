@@ -11,6 +11,8 @@ export const TEXT = {
     'Three guardmice are sent out to find a door before first snow, and to come home.',
     'Provisions are short. The country is unmapped. The season will not wait.',
   ],
+  /** {bearing} is replaced with the compass direction to the door. */
+  elders: 'The elders are sure of one thing: the door lies to the {bearing}, ten days\u2019 hard walking or more. Look for grey ground where nothing grows.',
   door: [
     'The ground changes underfoot. Grey slabs, too flat, too even, with no moss on them at all.',
     'Set into a bank of the same grey is a door. Not wood. Taller than ten mice standing on each other’s shoulders, with no handle, no hinge, and a single line of pale light running down its edge like frost.',

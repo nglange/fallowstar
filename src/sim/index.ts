@@ -4,7 +4,7 @@ export * from './hex';
 export { Rng, hashSeed } from './rng';
 export { generateMap, hexAt, inBounds, isPassable, reachableFrom, shortestPath } from './mapgen';
 export { sightFrom } from './fog';
-export { newGame, step, currentDay, daysRemaining, isAfternoon, atHold, canForage, SAVE_VERSION } from './game';
+export { newGame, step, currentDay, daysRemaining, isAfternoon, atHold, canForage, bearing, doorBearing, SAVE_VERSION } from './game';
 export { fleeChance } from './battle';
 export { isDown, livingMembers, xpToNext } from './party';
 export { serialize, deserialize } from './save';

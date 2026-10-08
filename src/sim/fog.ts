@@ -4,7 +4,8 @@
  * and bramble hardly past the next trunk.
  */
 import { TERRAIN } from '../content/terrain';
-import { hexesInRange, type Axial } from './hex';
+import { hexDistance, hexesInRange, type Axial } from './hex';
+import { BALANCE } from '../content/balance';
 import { hexAt } from './mapgen';
 import type { GameMap } from './types';
 
@@ -26,6 +27,22 @@ export function reveal(map: GameMap, pos: Axial, radius: number): number {
   return newly;
 }
 
+/**
+ * Reveal what the patrol can see from where it stands. From hills, the grey
+ * slabs of the old works stand out at a distance, so a nearby door is charted
+ * along with its ruin cluster.
+ */
 export function revealFromPosition(map: GameMap, pos: Axial): number {
-  return reveal(map, pos, sightFrom(map, pos));
+  let newly = reveal(map, pos, sightFrom(map, pos));
+  const here = hexAt(map, pos);
+  if (here?.terrain === 'hills' && hexDistance(pos, map.door) <= BALANCE.ruinSpotDistance) {
+    for (const h of hexesInRange(map.door, 1)) {
+      const hex = hexAt(map, h);
+      if (hex && hex.terrain === 'ruin' && !hex.revealed) {
+        hex.revealed = true;
+        newly++;
+      }
+    }
+  }
+  return newly;
 }

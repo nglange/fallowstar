@@ -9,5 +9,6 @@ export default defineConfig(({ mode }) => ({
   test: {
     include: ['src/**/*.test.ts'],
     environment: 'node',
+    env: { SIM_RUNS: process.env.SIM_RUNS ?? '' },
   },
 }));

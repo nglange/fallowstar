@@ -6,7 +6,7 @@
 import { ITEMS } from '../content/items';
 import { LANDMARKS } from '../content/landmarks';
 import { TEXT } from '../content/text';
-import { newGame, step } from '../sim/game';
+import { doorBearing, newGame, step } from '../sim/game';
 import { HEX_DIRECTIONS, hexAdd, hexAdjacent, type Axial } from '../sim/hex';
 import { hexAt, isPassable } from '../sim/mapgen';
 import type { Action, GameEvent, GameState, ItemId } from '../sim/types';
@@ -130,7 +130,7 @@ export class App {
     this.hud.render(this.state, null);
     this.dialogs.show({
       title: 'Before the snow',
-      paragraphs: [...TEXT.intro],
+      paragraphs: [...TEXT.intro, TEXT.elders.replace('{bearing}', doorBearing(this.state))],
       gain: `Seed: ${seed}`,
       buttons: [{ label: 'Set out', primary: true }],
     });
@@ -338,7 +338,7 @@ export class App {
     this.dialogs.show({
       title: 'Fallowstar',
       paragraphs: [
-        `Seed: ${s.seed}`,
+        `Seed: ${s.seed}. ${TEXT.elders.replace('{bearing}', doorBearing(s))}`,
         'Find a sealed door of the old builders and return to the hold before the snow. Each move costs time by terrain; the patrol eats three rations a day. Forage on green ground, camp to mend, and go home to restock.',
         'Move: tap a neighbouring hex, or Q E A D Z X. F forage, R camp, I items, C centre. Progress is saved automatically.',
       ],
