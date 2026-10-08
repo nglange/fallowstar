@@ -1,0 +1,20 @@
+{
+  "name": "fallowstar",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A browser-based hex-crawl exploration RPG about a patrol of guardmice and a failing world.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "sim": "SIM_RUNS=200 vitest run src/sim/balance.test.ts --reporter=verbose"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8"
+  }
+}
