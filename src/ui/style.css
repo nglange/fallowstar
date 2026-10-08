@@ -158,7 +158,8 @@ button { font: inherit; }
 
 /* ---------- Battle ---------- */
 #battle { background: var(--bark); color: var(--parchment); }
-#battle-canvas { width: 100%; flex: 1 1 auto; min-height: 0; display: block; touch-action: manipulation; }
+#battle-canvas { width: 100%; flex: 1 1 auto; min-height: 0; max-height: 56vh; display: block; touch-action: manipulation; }
+#battle .spacer { flex: 1 1 0; }
 .battle-party {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 6px 8px 0;
 }
